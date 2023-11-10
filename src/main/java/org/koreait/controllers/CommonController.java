@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.time.LocalDate;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +43,12 @@ public class CommonController {
         model.addAllAttributes(attrs);
         e.printStackTrace();
 
-        log.error(e.getMessage());
+        Writer writer = new StringWriter();
+        PrintWriter pr = new PrintWriter(writer);
+
+        e.printStackTrace(pr);
+
+        String errorMessage = ((StringWriter)writer).toString();
 
         return "error/common";
     }
