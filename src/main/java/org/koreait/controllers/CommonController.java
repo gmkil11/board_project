@@ -36,7 +36,7 @@ public class CommonController {
         Map<String, String> attrs =  new HashMap<>();
         attrs.put("status", String.valueOf(status.value()));
         attrs.put("path", request.getRequestURI());
-        attrs.put("metod", request.getMethod());
+        attrs.put("method", request.getMethod());
         attrs.put("message", e.getMessage());
         attrs.put("timeStamp", LocalDateTime.now().toString());
 
@@ -49,6 +49,7 @@ public class CommonController {
         e.printStackTrace(pr);
 
         String errorMessage = ((StringWriter)writer).toString();
+        log.error(errorMessage);
 
         return "error/common";
     }
