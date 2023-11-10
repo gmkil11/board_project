@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8">
+        <title th:if="${pageTitle != null}" th:text="${pageTitle}">제목...</title>
+        <!-- 공통 CSS 추가 -->
+        <link rel="stylesheet" type="text/css" th:href="@{/common/css/style.css}">
+        <link rel="stylesheet" type="text/css" th:each="file : ${addCommonCss}" th:href="@{/common/css/{file}.css(file=${file})}">
+
+        <!-- Admin CSS 추가 -->
+        <link rel="stylesheet" type="text/css" th:href="@{/admin f/css/style.css}">
+        <link rel="stylesheet" type="text/css" th:each="file : ${addCss}" th:href="@{/admin/css/{file}.css(file=${file})}">
+        <!-- 1. 경로에서 css로 하나씩 꺼내와 file 변수에 담는다. 2. 변수에 있는 file을 형식에 맞춰서 교체해준다. -->
+
+        <!-- 외부 Css 추가 할 때 사용 -->
+        <th:block layout:fragment="addCss"></th:block>
+
+        <!-- 공통 JS 추가 -->
+        <script th:src="@{/common/js/common.js}"></script>
+        <script th:each="file : ${addScript}" th:href="@{/common/js/{file}.js(file=${file})}"></script>
+
+        <!-- Admin JS 추가 -->
+        <script th:src="@{/admin/js/common.js}"></script>
+        <script th:each="file : ${addScript}" th:href="@{/admin/js/{file}.js(file=${file})}"></script>
+
+        <!-- 외부 JS 추가할 때 사용 -->
+        <th:block layout:fragment="addScript"></th:block>
+    </head>
+    <body>
+        <header th:replace="~{admin/outlines/header::common}"></header>
+        <main layout:fragment="content"></main>
+        <footer th:replace="~{admin/outlines/footer::common}"></footer>
+    </body>
+    <iframe name="iframeProcess" class="dn"></iframe>
+</html>

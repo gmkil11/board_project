@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0"/>
+        <title th:if="${pageTitle != null}" th:text="${pageTitle}">제목...</title>
+        <!-- 공통 CSS 추가 -->
+        <link rel="stylesheet" type="text/css" th:href="@{/common/css/style.css}">
+        <link rel="stylesheet" type="text/css" th:each="file : ${addCommonCss}" th:href="@{/common/css/{file}.css(file=${file})}">
+
+        <!-- Mobile CSS 추가 -->
+        <link rel="stylesheet" type="text/css" th:href="@{/mobile/css/style.css}">
+        <link rel="stylesheet" type="text/css" th:each="file : ${addCss}" th:href="@{/mobile/css/{file}.css(file=${file})}">
+        <!-- 1. 경로에서 css로 하나씩 꺼내와 file 변수에 담는다. 2. 변수에 있는 file을 형식에 맞춰서 교체해준다. -->
+
+        <!-- 외부 Css 추가 할 때 사용 -->
+        <th:block layout:fragment="addCss"></th:block>
+
+        <!-- 공통 JS 추가 -->
+        <script th:src="@{/common/js/common.js}"></script>
+        <script th:each="file : ${addScript}" th:href="@{/common/js/{file}.js(file=${file})}"></script>
+
+        <!-- Mobile JS 추가 -->
+        <script th:src="@{/mobile/js/common.js}"></script>
+        <script th:each="file : ${addScript}" th:href="@{/mobile/js/{file}.js(file=${file})}"></script>
+
+        <!-- 외부 JS 추가할 때 사용 -->
+        <th:block layout:fragment="addScript"></th:block>
+    </head>
+    <body>
+        <header th:replace="~{mobile/outlines/header::common}"></header>
+        <main layout:fragment="content"></main>
+        <footer th:replace="~{mobile/outlines/footer::common}"></footer>
+    </body>
+    <iframe name="iframeProcess" class="dn"></iframe>
+</html>
