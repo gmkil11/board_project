@@ -1,4 +1,4 @@
-package org.koreait.config;
+package org.koreait.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
