@@ -32,6 +32,7 @@ dependencies {
 	implementation 'com.oracle.database.jdbc:ojdbc11:23.3.0.23.09'
 	implementation 'com.oracle.database.jdbc:ojdbc11:23.3.0.23.09'
 	implementation 'org.modelmapper:modelmapper:3.2.0'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
