@@ -2,6 +2,7 @@ package org.koreait.models.member;
 
 import lombok.Builder;
 import lombok.Data;
+import org.koreait.entities.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,22 +12,28 @@ import java.util.Collection;
 @Builder
 public class MemberInfo implements UserDetails {
 
+    private String email;
+    private String password;
+    private Collection<? extends GrantedAuthority> authorities;
+
+    private Member member;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 계정이 갖고있는 권한 목록을 리턴한다.
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
         // 계정의 비밀번호를 리턴한다.
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
         // 계정의 이름을 리턴한다.
-        return null;
+        return email;
     }
 
     @Override
