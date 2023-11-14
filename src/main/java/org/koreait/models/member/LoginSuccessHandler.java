@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.koreait.commons.Utils;
+import org.koreait.entities.Member;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -22,8 +23,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         // 회원 정보를 가져와서 별도 세션에 저장함
         MemberInfo  memberInfo = (MemberInfo) authentication.getPrincipal();
-        System.out.println(memberInfo);
-        session.setAttribute("memberInfo", memberInfo);
+        Member member = memberInfo.getMember();
+        session.setAttribute("loginMember", member);
+
 
         // 로그인 성공시 페이지 이동
         // 요청 데이터 redirectURL 값이 있으면 이동하고, 없으면 메인페이지(/)로 이동
