@@ -2,6 +2,7 @@ package org.koreait.configs;
 
 
 import jakarta.servlet.http.HttpSession;
+import org.koreait.commons.MemberUtils;
 import org.koreait.commons.interceptors.CommonInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,6 +20,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // FileUpload 설정을 가져옴
 @EnableConfigurationProperties(FileUploadConfig.class)
 public class MvcConfig implements WebMvcConfigurer {
+
+
 
     @Autowired
     private FileUploadConfig fileUploadConfig;
@@ -55,7 +58,16 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 
+
+
+
         registry.addViewController("/")
+                .setViewName("front/main/index");
+
+        registry.addViewController("/mypage")
+                .setViewName("front/main/index");
+
+        registry.addViewController("/admin")
                 .setViewName("front/main/index");
     }
 }
