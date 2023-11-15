@@ -1,10 +1,10 @@
 spring:
   # 데이터베이스 설정
   datasource:
-    driverClassName: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:XE
-    username: project
-    password: _aA123456
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
 
   # JPA 설정
   jpa:
@@ -14,7 +14,7 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.OracleDialect
+        dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
 
@@ -22,8 +22,6 @@ spring:
 logging:
   level:
     org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+      springframework:
+        jdbc: trace
 
