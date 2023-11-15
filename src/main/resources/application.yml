@@ -63,5 +63,4 @@ logging:
         type:
           descriptor:
             sql: trace
-      springframework:
-        jdbc: trace
+
