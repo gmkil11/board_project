@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import org.koreait.commons.MemberUtils;
 import org.koreait.commons.interceptors.CommonInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 영상이랑 다름 질문하기 -> uploadPa
         registry.addResourceHandler(fileUploadConfig.getUrl()+ "**")
                 .addResourceLocations("file:///" + fileUploadConfig.getPath());
     }
