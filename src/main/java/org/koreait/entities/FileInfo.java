@@ -12,6 +12,10 @@ import java.util.UUID;
 @Data
 @Builder
 @NoArgsConstructor @AllArgsConstructor
+@Table(indexes = {
+        @Index(name = "idx_fileinfo_gid", columnList = "gid"),
+        @Index(name = "idx_fileinfo_gid_location", columnList = "gid,location")
+})
 public class FileInfo extends BaseMember {
 
     @Id
