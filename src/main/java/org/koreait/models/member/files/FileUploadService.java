@@ -48,6 +48,8 @@ public class FileUploadService {
             }
             // 파일 업로드 처리 끝
         }
+
+        return uploadedFiles;
     }
 
     public List<FileInfo> upload(MultipartFile[] files, String gid) {

@@ -88,7 +88,13 @@ public class FileInfoService {
         long folder = id % 10L;
 
         // 파일 업로드 서버 경로
-        String filePath = fileUploadPath + folder + "/" + fileName;
+        String fileDir = fileUploadPath + folder;
+        String filePath = fileDir + "/" + fileName;
+        File _fileDir = new File(fileDir); // 폴더에 대한 경로
+        // 폴더가 없으면 생성해줌
+        if (!_fileDir.exists()){
+            _fileDir.mkdir();
+        }
 
         // 파일 서버 접속 URL
         String fileUrl = request.getContextPath() + fileUploadUrl + folder + "/" + fileName;
@@ -96,6 +102,7 @@ public class FileInfoService {
         // 썸네일 경로(thumbsPath)
         String thumbPath = getUploadThumbPath() +  folder;
         File thumbDir = new File(getUploadThumbPath());
+        // 폴더가 없으면 생성해줌
         if (!thumbDir.exists()) {
             thumbDir.mkdirs();
         }
