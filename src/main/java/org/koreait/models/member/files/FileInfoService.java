@@ -19,11 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileInfoService {
 
-    @Autowired
-    private FileUploadConfig fileUploadConfig;
 
-    private String fileUploadPath = fileUploadConfig.getPath();
-    private String fileUploadUrl = fileUploadConfig.getUrl();
+    @Value("${file.upload.path}")
+    private String fileUploadPath;
+    @Value("${file.upload.url}")
+    private String fileUploadUrl;
 
     private final HttpServletRequest request;
 

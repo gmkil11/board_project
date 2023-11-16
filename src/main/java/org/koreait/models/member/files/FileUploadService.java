@@ -3,7 +3,6 @@ package org.koreait.models.member.files;
 import lombok.RequiredArgsConstructor;
 import org.koreait.entities.FileInfo;
 import org.koreait.repositories.FileInfoRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
