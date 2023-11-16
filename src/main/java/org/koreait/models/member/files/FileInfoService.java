@@ -37,13 +37,42 @@ public class FileInfoService {
     public FileInfo get(Long id) {
 
         FileInfo item = repository.findById(id).orElseThrow(FileNotFoundException::new);
+
         addFileInfo(item);
 
         return item;
     }
 
     public List<FileInfo> getList(Options opts) {
-        return null;
+        List<FileInfo> items = repository.getFiles(opts.getGid(), opts.getLocation(), opts.getMode().name());
+        items.forEach(this::addFileInfo);
+        return items;
+    }
+
+    public List<FileInfo> getListAll(String gid, String location){
+        Options opts= Options.builder()
+                .gid(gid)
+                .location(location)
+                .mode(SearchMode.ALL)
+                .build();
+        return getList(opts);
+    }
+
+    public List<FileInfo> getListAll(String gid){
+        return getListAll(gid, null);
+    }
+
+    public List<FileInfo> getListDone(String gid, String location) {
+        Options opts= Options.builder()
+                .gid(gid)
+                .location(location)
+                .mode(SearchMode.DONE)
+                .build();
+        return getList(opts);
+    }
+
+    public List<FileInfo> getListDone(String gid) {
+        return getListDone(gid, null);
     }
 
     /**
@@ -71,7 +100,7 @@ public class FileInfoService {
             thumbDir.mkdirs();
         }
 
-        // 100_100_1.png
+            // 100_100_1.png 형식
         String[] thumbsPath = thumbDir.list((dir, name) -> name.indexOf("_" + fileName) != -1);
 
         // 썸네일 URL(thumbsUrl)
