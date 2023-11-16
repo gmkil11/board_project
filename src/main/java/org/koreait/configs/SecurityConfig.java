@@ -3,6 +3,7 @@ package org.koreait.configs;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.koreait.models.member.LoginFailureHandler;
 import org.koreait.models.member.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class SecurityConfig {
                     .passwordParameter("password")
                     .successHandler(new LoginSuccessHandler())
                     .failureHandler(new LoginFailureHandler());
+
 
         }); // DSL
 

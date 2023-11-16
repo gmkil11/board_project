@@ -1,0 +1,18 @@
+package org.koreait.entities;
+
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+public class BoardViewId implements Serializable {
+
+    private Long seq;
+
+    private Integer uid;
+}
