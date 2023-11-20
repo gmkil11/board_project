@@ -1,16 +1,15 @@
 package org.koreait.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.koreait.commons.constants.MemberType;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -41,7 +40,9 @@ public class Member extends Base {
     @Enumerated(EnumType.STRING)
     private MemberType mtype = MemberType.USER;
 
-
+    @ToString.Exclude
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // 보드데이터에 정의 되어있음 , cascade.REMOVE -> 자식이 삭제가 되고 부모가 삭제되게 함
+    private List<BoardData> items = new ArrayList<>();
 
 
     /*
