@@ -1,89 +1,55 @@
 package org.koreait.controllers.members;
 
-import jakarta.persistence.EntityManager;
-import lombok.extern.slf4j.Slf4j;
-import org.koreait.commons.MemberUtils;
-import org.koreait.commons.Utils;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.koreait.commons.CommonProcess;
 import org.koreait.commons.Utils;
-import org.koreait.entities.BoardData;
-import org.koreait.entities.Member;
-import org.koreait.models.member.MemberInfo;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.koreait.models.member.MemberSaveService;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.security.Principal;
 
 @Slf4j
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@Transactional
-public class MemberController {
+public class MemberController implements CommonProcess {
 
-    private final MemberUtils memberUtils;
-    private final EntityManager em;
     private final Utils utils;
+    private final MemberSaveService saveService;
 
     @GetMapping("/join")
-    public String join() {
-
+    public String join(@ModelAttribute RequestJoin form, Model model) {
+        commonProcess(model, Utils.getMessage("회원가입", "common"));
+        
         return utils.tpl("member/join");
+    }
+
+    @PostMapping("/join")
+    public String joinPs(@Valid RequestJoin form, Errors errors, Model model) {
+        commonProcess(model, Utils.getMessage("회원가입", "common"));
+
+        saveService.join(form, errors);
+
+        if (errors.hasErrors()) {
+            return utils.tpl("member/join");
+        }
+
+        return "redirect:/member/login";
     }
 
     @GetMapping("/login")
     public String login(String redirectURL, Model model) {
+        commonProcess(model, Utils.getMessage("로그인", "common"));
+        
         model.addAttribute("redirectURL", redirectURL);
+
         return utils.tpl("member/login");
     }
 
-    @GetMapping("/info")
-    @ResponseBody
-    public void info() {
-        BoardData data = BoardData.builder()
-                .subject("제목1")
-                .content("내용")
-                .build();
-
-        em.persist(data);
-        em.flush();
-
-        data.setSubject("(수정1)제목");
-        em.flush();
-    }
-/*
-        Member member = memberUtils.getMember();
-        // 로그인이 되어있을 경우 로그를 출력
-        if(memberUtils.isLogin()) {
-            log.info(member.toString());
-        }
-        log.info("로그인 여부 : {}", memberUtils.isLogin());
-*/
-/*
-    public void info() {
-        MemberInfo member = (MemberInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // 회원 정보를 갖고있는 객체
-
-        log.info(member.toString());
-    }
-*/
-
-/*
-    public void info(@AuthenticationPrincipal MemberInfo memberInfo) {
-        log.info(memberInfo.toString());
-    }
-*/
-
-/*
-    public void info(Principal principal) {
-        String email = principal.getName();
-        log.info(email);
-    }
-*/
 }

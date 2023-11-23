@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @Data
-@RequiredArgsConstructor @NoArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class JSONData<T> {
     private boolean success = true;
     private HttpStatus status = HttpStatus.OK;

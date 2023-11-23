@@ -5,51 +5,29 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.koreait.commons.constants.MemberType;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
-@Data
-@Builder
 @Entity
+@Data @Builder
 @NoArgsConstructor @AllArgsConstructor
-@Table(indexes = {
-        @Index(name = "idx_member_userNm", columnList = "userNm"),
-        @Index(name = "idx_member_mobile", columnList = "mobile")
-})
 public class Member extends Base {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long UserNo;
+    @Id @GeneratedValue
+    private Long userNo;
 
-    @Column(unique = true, nullable = false, length = 65)
+    @Column(length=65, unique = true, nullable = false)
     private String email;
 
-    @Column(name="pw", length = 65, nullable = false)
+    @Column(length=65, nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 45)
+    @Column(length=40, nullable=false)
     private String userNm;
 
-    @Column(length = 11)
+    @Column(length=11)
     private String mobile;
 
-    @Column(length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(length=15, nullable = false)
     private MemberType mtype = MemberType.USER;
-
-
-
-
-    /*
-    @Transient
-    private String tmpData;
-
-
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    */
 }

@@ -43,8 +43,4 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 
         response.sendRedirect(request.getContextPath() + "/member/login");
     }
-
-    private void init(HttpSession session) {
-
-    }
 }
