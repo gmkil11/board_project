@@ -1,24 +1,26 @@
 package org.koreait.controllers.admins;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.koreait.commons.CommonProcess;
+import org.koreait.commons.ScriptExceptionProcess;
 import org.koreait.commons.menus.Menu;
+import org.koreait.models.board.config.BoardConfigSaveService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
 @Controller("adminBoardController")
 @RequestMapping("/admin/board")
 @RequiredArgsConstructor
-public class BoardController {
+public class BoardController implements ScriptExceptionProcess {
 
     private final HttpServletRequest request;
+    private final BoardConfigSaveService saveService;
+
     @GetMapping
     public String list(Model model) {
         commonProcess("list", model);
@@ -27,7 +29,7 @@ public class BoardController {
     }
 
     @GetMapping("/add")
-    public String register(Model model) {
+    public String register(@ModelAttribute BoardConfigForm form, Model model) {
         commonProcess("add", model);
 
         return "admin/board/add";
@@ -36,16 +38,26 @@ public class BoardController {
     @GetMapping("/edit/{bId}")
     public String update(@PathVariable String bId, Model model) {
         commonProcess("edit", model);
+
         return "admin/board/edit";
     }
 
     @PostMapping("/save")
-    public String save() {
+    public String save(@Valid BoardConfigForm form, Errors errors, Model model) {
+
+        String mode = Objects.requireNonNullElse(form.getMode(), "add");
+        commonProcess(mode, model);
+
+        if (errors.hasErrors()) {
+            return "admin/board/" + mode;
+        }
+
+        saveService.save(form);
 
         return "redirect:/admin/board";
     }
-
-    public void commonProcess(String mode, Model model) {
+    
+    private void commonProcess(String mode, Model model) {
         String pageTitle = "게시판 목록";
         mode = Objects.requireNonNullElse(mode, "list");
         if (mode.equals("add")) pageTitle = "게시판 등록";
@@ -54,7 +66,6 @@ public class BoardController {
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("menuCode", "board");
         model.addAttribute("submenus", Menu.gets("board"));
-        model.addAttribute("submenuCode", Menu.getSubMenuCode(request)); // url 끝에 / 뒤로 있는 것을 잘라서 submenuCode로 넣어줌
+        model.addAttribute("subMenuCode", Menu.getSubMenuCode(request));
     }
-
 }
