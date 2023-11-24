@@ -26,10 +26,11 @@ public class CommonInterceptor implements HandlerInterceptor {
         }
         /* PC, Mobile 수동 변경 처리 E */
 
-        /* 로그인 페이지 아닐경우 세션 로그인 유효성 검사 세션 삭제 처리 */
+        /* 로그인 페이지 아닐 경우 로그인 유효성 검사 세션 삭제 처리 */
         String URI = request.getRequestURI();
-        if (!URI.contains("/member/login")){
+        if (URI.indexOf("/member/login") == -1) {
             Utils.loginInit(session);
         }
+
     }
 }
