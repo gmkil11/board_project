@@ -2,9 +2,6 @@ server:
   port: 3000
 
 spring:
-  # 프로필 설정
-  profiles:
-    active: dev
 
   # 데이터베이스 설정
   datasource:
@@ -24,7 +21,7 @@ spring:
         use_sql_comments: true
         dialect: org.hibernate.dialect.OracleDialect
     hibernate:
-      ddlAuto: create
+      ddlAuto: update
 
   # 파일 업로드 설정
   servlet:

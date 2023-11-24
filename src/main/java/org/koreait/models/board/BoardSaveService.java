@@ -5,6 +5,7 @@ import org.koreait.controllers.boards.BoardForm;
 import org.koreait.entities.BoardData;
 import org.koreait.repositories.BoardDataRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -12,8 +13,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class BoardSaveService {
     private final BoardDataRepository boardDataRepository;
-
-    public void save(BoardForm form){
+    @Transactional
+    public void save(BoardForm form) {
         Long seq = form.getSeq();
         String mode = Objects.requireNonNullElse(form.getMode(), "add");
 
@@ -30,5 +31,4 @@ public class BoardSaveService {
 
         boardDataRepository.saveAndFlush(data);
     }
-
 }

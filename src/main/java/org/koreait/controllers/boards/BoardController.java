@@ -26,6 +26,7 @@ public class BoardController implements ScriptExceptionProcess {
     private final BoardSaveService saveService;
     private final BoardInfoService infoService;
 
+
     @GetMapping("/write/{bId}")
     public String write(@PathVariable String bId, @ModelAttribute BoardForm form, Model model) {
         commonProcess(bId, "write", model);
@@ -64,8 +65,9 @@ public class BoardController implements ScriptExceptionProcess {
 
     @GetMapping("/delete/{seq}")
     public String delete(@PathVariable Long seq) {
+        infoService.delete(seq);
 
-        return "redirect:/board/list/게시판 ID";
+        return "redirect:/board/list";
     }
 
     private void commonProcess(String bId, String mode, Model model) {
