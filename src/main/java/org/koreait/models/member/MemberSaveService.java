@@ -8,6 +8,7 @@ import org.koreait.entities.Member;
 import org.koreait.repositories.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 
 @Service
@@ -22,6 +23,7 @@ public class MemberSaveService {
      * @param form
      * @param errors
      */
+    @Transactional
     public Member join(RequestJoin form, Errors errors) {
         validator.validate(form, errors);
 
@@ -45,6 +47,7 @@ public class MemberSaveService {
         return member;
     }
 
+    @Transactional
     public void save(Member member) {
         String mobile = member.getMobile();
         if (mobile != null) {
