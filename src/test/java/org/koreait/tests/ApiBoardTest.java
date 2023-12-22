@@ -1,6 +1,5 @@
 package org.koreait.tests;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,26 +11,25 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
-@TestPropertySource(properties = "spring.profiles.active=test")
 @AutoConfigureMockMvc
+@TestPropertySource(properties = "spring.profiles.active=test")
 public class ApiBoardTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+
     @Test
     @DisplayName("글 작성 성공시 201 응답")
     void boardSaveTest() throws Exception {
 
-        BoardForm form =new BoardForm();
+        BoardForm form = new BoardForm();
         form.setBId("notice");
         form.setSubject("제목");
         form.setContent("내용");
@@ -47,5 +45,4 @@ public class ApiBoardTest {
                         .content(params)
         ).andDo(print()).andExpect(status().isCreated());
     }
-
 }

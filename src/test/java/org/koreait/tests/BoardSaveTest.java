@@ -10,19 +10,20 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
-@TestPropertySource(properties = "spring.profiles.active=test")
 @AutoConfigureMockMvc
+@TestPropertySource(properties = "spring.profiles.active=test")
 public class BoardSaveTest {
+
 
     @Autowired
     private MockMvc mockMvc;
 
+
     @Test
-    @DisplayName("게시글 저장 테스트 - 성공시 /board/view/list 게시글 번호 이동")
+    @DisplayName("게시글 저장 테스트 - 성공시 /board/list/게시글 아이디")
     void saveTest() throws Exception {
         String url = mockMvc.perform(post("/board/save")
                 .param("mode", "write")
@@ -34,6 +35,6 @@ public class BoardSaveTest {
 
         assertTrue(url.contains("/board/list"));
 
-    }
 
+    }
 }

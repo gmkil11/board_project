@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/board")
+@RequestMapping("/api/v1/board")
 @RequiredArgsConstructor
 public class ApiBoardController {
 
@@ -25,23 +25,23 @@ public class ApiBoardController {
     private final BoardInfoService infoService;
 
     @PostMapping("/write/{bId}")
-    public ResponseEntity<JSONData<Object>> write(@PathVariable("bId") String bId, @RequestBody @Valid BoardForm form, Errors errors) {
+    public ResponseEntity write(@PathVariable("bId") String bId, @RequestBody @Valid BoardForm form, Errors errors) {
 
         if (errors.hasErrors()) {
-            String message = errors.getFieldErrors().stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(","));
+            String message = errors.getFieldErrors().stream()
+                    .map(FieldError::getDefaultMessage).collect(Collectors.joining(","));
             throw new BadRequestException(message);
         }
+
         saveService.save(form);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
-
     }
 
     @GetMapping("/view/{seq}")
-    public JSONData<BoardData> view(@PathVariable Long seq) {
+    public JSONData<BoardData> view(@PathVariable("seq") Long seq) {
 
         BoardData data = infoService.get(seq);
-
 
         return new JSONData<>(data);
     }
